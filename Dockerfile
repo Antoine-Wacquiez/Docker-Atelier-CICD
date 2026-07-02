@@ -1,5 +1,8 @@
-# Utilise l'image PHP 8.0 avec Apache
-FROM php:8.0-apache
+# Utilise l'image PHP 8.3 avec Apache
+FROM php:8.3-apache
+
+# Applique les derniers correctifs de sécurité des paquets systeme
+RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
 
 # Copie le code de l'application dans le répertoire par défaut d'Apache
 COPY . /var/www/html/
