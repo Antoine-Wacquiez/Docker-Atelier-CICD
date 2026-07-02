@@ -18,3 +18,14 @@ services:  # Déclare les services qui seront créés. Chaque service correspond
       MYSQL_DATABASE: docker  # Crée une base de données nommée "docker" à l'initialisation.
     volumes:
       - ./db_init:/docker-entrypoint-initdb.d  # Monte le répertoire "db_init" de la machine hôte dans le conteneur pour y stocker des scripts d'initialisation de la base de données.
+
+  phpmyadmin:  # Définition du service "phpmyadmin", interface web d'administration de la base de données.
+    image: phpmyadmin/phpmyadmin:latest  # Utilise l'image officielle de phpMyAdmin.
+    environment:
+      PMA_HOST: db  # Indique à phpMyAdmin le nom du service de base de données à contacter.
+      PMA_PORT: 3306  # Port MySQL du service "db".
+      MYSQL_ROOT_PASSWORD: exemple  # Mot de passe root utilisé pour se connecter à MySQL.
+    ports:
+      - "8081:80"  # Expose phpMyAdmin sur le port 8081 de la machine hôte.
+    depends_on:
+      - db  # Ce service dépend du service "db".
